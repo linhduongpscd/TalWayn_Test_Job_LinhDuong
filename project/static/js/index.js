@@ -66,7 +66,7 @@ $(document).ready(function () {
     $(document).on('change', '.refresh-status', function (e) {
         let checked = e.target.checked;
         if (checked) {
-            intervalRefreshStatus = setInterval(refreshStatus, 60000);
+            intervalRefreshStatus = setInterval(refreshStatus, 5000);
         }
         else {
             clearInterval(intervalRefreshStatus);
