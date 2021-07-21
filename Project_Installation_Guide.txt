@@ -1,0 +1,19 @@
+Project installation guide
+
+- Install virtual environment and install required packages
+- Using Postgresql create database
+- Migrate data 
+- Run server
+- Link: 
+    + List Job: 127.0.0.1:8000
+    + Create Job: 127.0.0.1:8000/add-job/
+    + update Job: 127.0.0.1:8000/update-job/<int:pk>/
+- Turn on/off button "Auto refresh" every 5 seconds
+- Turn on/off button "Refresh status" every minute to run file python script "refresh_statuses.py" 
+- Test button refresh: 
+    + Turn on button "Auto refresh"
+    + Open a new window to create/update Job
+    + See the change in first window
+- Test button "Refresh status": 
+    + Turn on both buttons "Refresh status" and "Auto refresh" to see the interface change
+    + See the change status of job if there are changes (or update status to incorrect to see the change)
