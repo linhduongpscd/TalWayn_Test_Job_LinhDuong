@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row justify-content-between">
-                        <div class="col-8 col-sm-6 align-self-center">
+                        <div class="col-6 col-sm-6 align-self-center">
                             <div class="form-group d-flex mb-0">
                                 <label class="mb-0 mr-3 align-self-center" for="filterStatus">Status</label>
                                 <form action="GET" class="w-25">
@@ -26,9 +26,15 @@
                             </div>
                         </div>
                         <div class="col-2 col-sm-2 align-self-center text-right">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="switch1">
-                                <label class="custom-control-label" for="switch1">Auto Refresh</label>
+                            <div class="auto-refresh custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switch_autoRefresh">
+                                <label class="custom-control-label" for="switch_autoRefresh">Auto Refresh</label>
+                            </div>
+                        </div>
+                        <div class="col-2 col-sm-2 align-self-center text-right">
+                            <div class="refresh-status custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switch_refreshStatus">
+                                <label class="custom-control-label" for="switch_refreshStatus">Refresh Status</label>
                             </div>
                         </div>
                         <div class="col-2 col-sm-2 text-right">
@@ -106,11 +112,10 @@
 {% endblock content %}
 
 {% block javascript %} 
-<script type="text/javascript" src="{%static 'js/homepage.js'%}"></script>
+<script type="text/javascript" src="{%static 'js/index.js'%}"></script>
 <script type="text/javascript" src="{%static 'js/jquery-confirm.js'%}"></script>
 <script>
-    let status = '{{parameter}}';
-    if (status != 'None') {
+    if (`{{parameter}}` != 'None') {
         $("#filterStatus").val('{{parameter}}').trigger("change");
     }
 </script> 

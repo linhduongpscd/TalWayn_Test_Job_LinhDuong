@@ -63,8 +63,7 @@
 <script type="text/javascript" src="{%static 'js/homepage.js'%}"></script>
 <script type="text/javascript" src="{%static 'js/jquery-confirm.js'%}"></script>
 <script>
-    let status = '{{parameter}}';
-    if (status != 'None') {
+    if (`{{parameter}}` != 'None') {
         $("#filterStatus").val('{{parameter}}').trigger("change");
     }
 </script> 

@@ -42,7 +42,6 @@ class JobForm(forms.ModelForm):
 
     def clean(self):
         name = self.cleaned_data.get('name')
-        # if not self.instance:
         if len(name) == 0:
             self.add_error('name', 'Name is required')
         else:
@@ -55,18 +54,11 @@ class JobForm(forms.ModelForm):
             except Job.DoesNotExist:
                 pass
             
-        # status = self.cleaned_data.get('status')
-        # # if not self.instance:
-        # if len(status) == 0 or status is None:
-        #     self.add_error('status', 'Status is required')
-            
         start_time = self.cleaned_data.get('start_time')
-        # if not self.instance:
         if len(start_time) == 0 or start_time is None:
             self.add_error('start_time', 'Start Time is required')
             
         end_time = self.cleaned_data.get('end_time')
-        # if not self.instance:
         if len(end_time) == 0 or end_time is None:
             self.add_error('end_time', 'End Time is required')
             
@@ -74,12 +66,10 @@ class JobForm(forms.ModelForm):
             try:
                 start_time_object = datetime.datetime.fromisoformat(start_time)
             except Exception as e:
-                print(e)
                 self.add_error('start_time', 'Enter correct format')
             try:
                 end_time_object = datetime.datetime.fromisoformat(end_time)
             except Exception as e:
-                print(e)
                 self.add_error('end_time', 'Enter correct format')
             if start_time_object >= end_time_object:
                  self.add_error('end_time', 'End time must be after Start time.')
