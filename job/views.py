@@ -39,10 +39,6 @@ class ListJobView(View):
     def get(self, request):
         if request.is_ajax() and 'auto_refresh' in request.GET:
             try:
-                process = Popen(['python',settings.BASE_DIR +'/project/refresh_statuses.py'], stdout=PIPE, stderr=STDOUT)
-                output = process.stdout.read()
-                exitstatus = process.poll()
-                
                 context = self.getlist(request)
                 html = render_to_string('refresh_resutl.html',context=context)
                 return HttpResponse(json.dumps({'status': "success", 'html' : html}), content_type='application/json')  
