@@ -1,0 +1,66 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/job.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row justify-content-between">
+                        <div class="col-6 align-self-center">
+                            {{title}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST" >
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="id_name">Name</label>
+                                {{form.name}}
+                                <span class="text-danger" id="error-name">{{ form.name.errors.as_text }}</span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="id_status">Status</label>
+                                {{form.status}}
+                                <span class="text-danger" id="error-status">{{ form.status.errors.as_text }}</span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="id_start_time">Start time</label>
+                                {{form.start_time}}
+                                <span class="text-danger" id="error-start_time">{{ form.start_time.errors.as_text }}</span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="id_end_time">End Time</label>
+                                {{form.end_time}}
+                                <span class="text-danger" id="error-end_time">{{ form.end_time.errors.as_text }}</span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">{{title}}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascript %} 
+    <script type="text/javascript" src="{% static 'js/moment.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script>
+    $(function () {
+        $('#id_start_time').datetimepicker({format: 'YYYY-MM-DD HH:mm'});
+        $('#id_end_time').datetimepicker({format: 'YYYY-MM-DD HH:mm'});
+    });
+    </script>
+{% endblock %}

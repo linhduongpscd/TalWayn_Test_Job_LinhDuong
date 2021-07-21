@@ -1,0 +1,117 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Home Page{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/jquery-confirm.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row justify-content-between">
+                        <div class="col-8 col-sm-6 align-self-center">
+                            <div class="form-group d-flex mb-0">
+                                <label class="mb-0 mr-3 align-self-center" for="filterStatus">Status</label>
+                                <form action="GET" class="w-25">
+                                    <select class="form-control" id="filterStatus">
+                                        <option value='all'>All</option>
+                                        <option value='running'>Running</option>
+                                        <option value='stop'>Stop</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-2 col-sm-2 align-self-center text-right">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switch1">
+                                <label class="custom-control-label" for="switch1">Auto Refresh</label>
+                            </div>
+                        </div>
+                        <div class="col-2 col-sm-2 text-right">
+                            <a class="btn btn-success" href="/add-job/" >Add new</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if list_job %}
+                            {% for job in list_job %}
+                                <tr>
+                                    <th scope="row">{{job.pk}}</th>
+                                    <td>{{job.name}}</td>
+                                    <td>{% if job.status == True %}Running{% elif job.status == False %}Stop{% endif %}</td>
+                                    <td class="text-right">
+                                        <a class="btn btn-primary btn-sm" href="{% url 'update-job' pk=job.pk %}">Update</a>
+                                        <a class="btn btn-danger btn-sm delete-job" href="{% url 'delete-job' pk=job.pk %}">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td class = "text-center" colspan="4">No data</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation example">
+                        {% if list_job.has_other_pages %}
+                            <ul class="pagination mt-3 justify-content-center">
+
+                            {% if list_job.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?{% if parameter %}status={{ parameter }}&{% endif %}page={{ list_job.previous_page_number }}">&laquo;</a></li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1"><span>&laquo;</span></a>
+                                </li>
+                            {% endif %}
+
+                            {% for i in list_job.paginator.page_range %}
+                                {% if list_job.number == i %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="?{% if parameter %}status={{ parameter }}&{% endif %}page={{ i }}">{{ i }}<span class="sr-only">(current)</span></a>
+                                </li>
+                                {% else %}
+                                <li class="page-item"><a class="page-link" href="?{% if parameter %}status={{ parameter }}&{% endif %}page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if list_job.has_next %}
+                                <li class="page-item"><a class="page-link" href="?{% if parameter %}status={{ parameter }}&{% endif %}page={{ list_job.next_page_number }}">&raquo;</a></li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1"><span>&raquo;</span></a>
+                            </li>
+                            {% endif %}
+                            </ul>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascript %} 
+<script type="text/javascript" src="{%static 'js/homepage.js'%}"></script>
+<script type="text/javascript" src="{%static 'js/jquery-confirm.js'%}"></script>
+<script>
+    let status = '{{parameter}}';
+    if (status != 'None') {
+        $("#filterStatus").val('{{parameter}}').trigger("change");
+    }
+</script> 
+{% endblock %}

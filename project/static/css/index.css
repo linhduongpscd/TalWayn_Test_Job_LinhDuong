@@ -1,0 +1,7 @@
+.navbar {
+    background-color: #e3f2fd;
+}
+.custom-control-label,
+.custom-control-label::before {
+    cursor: pointer;
+}
