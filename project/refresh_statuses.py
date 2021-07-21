@@ -42,6 +42,7 @@ def get_jobs():
             start_time = row[4]
             end_time = row[3]
             id_job = row[0]
+            print("Start time: {0}, End time: {1}".format(start_time,end_time))
             if start_time <= now_time and now_time <= end_time:
                 update_job(True, id_job)
             else:
